@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-50 dark:bg-dark  dark:text-slate-200 overflow-hidden;
+}
+
+body, button {
+  @apply text-color;
+}
+
+input {
+  @apply bg-slate-100 dark:text-slate-200 dark:bg-input border dark:border-input text-color text-base p-2;
+
+  ::placeholder {
+    @apply text-slate-400;
+  }
+  &.error::placeholder {
+    @apply text-danger
+  }
+}
+
+/* .error {
+  &::placeholder {
+    @apply text-danger
+  }
+} */
+
+button {
+  @apply disabled:bg-opacity-40 text-sm;
+}
+
+
+.select button {
+  @apply bg-input border-input text-slate-400 !important;
+}
+
+div[role="dialog"] > button {
+  @apply dark:text-slate-200
+}
+
+
+.overlay {
+  @apply z-50 fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center;
+}

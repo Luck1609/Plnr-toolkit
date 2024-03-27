@@ -1,0 +1,36 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+export const initialState = {
+  notice: {
+    show: false,
+    title: "",
+    message: "",
+    action: "",
+    mutations: "",
+    payload: "",
+    method: "delete",
+  },
+};
+
+const NoticeReducer = createSlice({
+  name: "noticeReducer",
+  initialState,
+  reducers: {
+    toggleNotice: (state, { payload }) => {
+      console.log("Notice payload", payload);
+      return {
+        ...state,
+        notice:
+          payload === "close"
+            ? initialState.notice
+            : { ...initialState.notice, ...payload },
+      };
+    },
+  },
+});
+
+const { actions, reducer: noticeReducer } = NoticeReducer;
+
+export const { toggleNotice } = actions;
+
+export default noticeReducer;
