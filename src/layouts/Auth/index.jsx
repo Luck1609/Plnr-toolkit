@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { Bell, Moon, Sun } from "lucide-react";
+import { Bell, LogOut, Moon, Sun } from "lucide-react";
 import SideNav from "./Sidenav";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -13,10 +12,12 @@ import { useTheme } from "@/hooks/useTheme";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/useAuth";
 import Loader from "@/components/Loader";
+import { toggleLogoutNotice } from "@/lib/toolkit/reducers/notice";
+import { useDispatch } from "react-redux";
 
 export default function AuthLayout() {
   const { setTheme, theme } = useTheme(),
-    { isLoading, error } = useAuth({ middleware: "auth" });
+    { isLoading, error, user } = useAuth({ middleware: "auth" }), dispatch = useDispatch(), logout = () => dispatch(toggleLogoutNotice());
 
   const toggleTheme = (theme) => () => setTheme(theme);
 
@@ -47,15 +48,15 @@ export default function AuthLayout() {
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button className="dark:text-slate-200">
-                              Nathan Luck
+                              {user.firstname}
                             </Button>
                           </DropdownMenuTrigger>
 
-                          <DropdownMenuContent className="w-56">
-                            <DropdownMenuItem>
-                              {/* <CreditCard className="mr-2 h-4 w-4" /> */}
-                              <span>Billing</span>
-                              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                          <DropdownMenuContent className="w-44 dark:bg-input dark:border-input">
+                            
+                            <DropdownMenuItem onClick={logout}>
+                              <LogOut className="mr-2 h-4 w-4" />
+                              <span>logout</span>
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 
 export default function THeader({
   options: {
-    btn: { action = () => {}, text = "", show = true },
+    btn: { action = () => {}, text = "", show = true, btnComponent = <></> },
     setParams,
     title,
     component,
@@ -32,12 +32,13 @@ export default function THeader({
             <TableFilter setParams={setParams} />
 
             {
-              show && (
+              show ? (
                 <Button variant="primary" onClick={action}>
                   {text}
                 </Button>
-              )
+              ) : btnComponent
             }
+            
 
           {(position === "within") && component && component(table)}
           </div>

@@ -10,6 +10,7 @@ export const initialState = {
     payload: "",
     method: "delete",
   },
+  logout: false
 };
 
 const NoticeReducer = createSlice({
@@ -26,11 +27,15 @@ const NoticeReducer = createSlice({
             : { ...initialState.notice, ...payload },
       };
     },
+
+    toggleLogoutNotice: (state, {payload}) => {
+      state.logout = payload !== "close"
+    }
   },
 });
 
 const { actions, reducer: noticeReducer } = NoticeReducer;
 
-export const { toggleNotice } = actions;
+export const { toggleNotice, toggleLogoutNotice } = actions;
 
 export default noticeReducer;

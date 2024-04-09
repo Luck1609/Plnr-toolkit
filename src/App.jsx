@@ -1,20 +1,21 @@
+import { lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Guest from "./layouts/Guest";
-import AuthLayout from "./layouts/Auth";
-import Login from "@/pages/Auth/Login";
-import Register from "@/pages/Auth/Register";
-import Office from "@/pages/Auth/Office";
-import Dashboard from "@/pages/Dashboard";
-import Permit from "@/pages/Applications";
-import Locality from "@/pages/Locality";
-import Sectors from "@/pages/Locality/Sector";
-import Quarters from "@/pages/Quarter";
-import Staff from "@/pages/Staff";
-import Committee from "@/pages/Committee";
-import Sms from "@/pages/Sms";
-import Settings from "@/pages/Settings";
-import Letters from "@/pages/Letter";
-import PreflightCheck from "./pages/PreflightCheck";
+const Guest = lazy(() => import("./layouts/Guest"));
+const AuthLayout = lazy(() => import("./layouts/Auth"));
+const Login = lazy(() => import("@/pages/Auth/Login"));
+const Register = lazy(() => import("@/pages/Auth/Register"));
+const Office = lazy(() => import("@/pages/Auth/Office"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const Permit = lazy(() => import("@/pages/Applications"));
+const Locality = lazy(() => import("@/pages/Locality"));
+const Sectors = lazy(() => import("@/pages/Locality/Sector"));
+const Quarters = lazy(() => import("@/pages/Quarter"));
+const Staff = lazy(() => import("@/pages/Staff"));
+const Committee = lazy(() => import("@/pages/Committee"));
+const Sms = lazy(() => import("@/pages/Sms"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const Letters = lazy(() => import("@/pages/Letter"));
+const PreflightCheck = lazy(() => import("./pages/PreflightCheck"));
 
 function App() {
   return (

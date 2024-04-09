@@ -8,6 +8,8 @@ export default function Guest() {
   const { pathname } = useLocation(),
     { isLoading, error } = useAuth({ middleware: "guest" });
 
+    console.log("Guest layout error", error, isLoading)
+
   return isLoading ? (
     <Loader className="w-full !h-screen" />
   ) : !error ? (

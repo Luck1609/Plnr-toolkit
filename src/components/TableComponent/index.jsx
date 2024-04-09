@@ -37,9 +37,10 @@ BaseTable.propTypes = {
     overrideDefaultComponent: propTypes.bool,
     component: propTypes.func,
     btn: propTypes.shape({
-      text: propTypes.string.isRequired,
+      text: propTypes.string,
       action: propTypes.func,
-      show: propTypes.bool
+      show: propTypes.bool,
+      btnComponent: propTypes.object
     })
   }),
 };

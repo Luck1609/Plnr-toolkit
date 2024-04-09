@@ -12,20 +12,13 @@ import { TypographyXs } from "./Typography";
 export function SelectField({ name, options, label }) {
   const { control } = useFormContext();
 
-  // const onChange = (data) =>
-  //   setValue(name, data, {
-  //     // shouldDirty: true,
-  //     // shouldTouch: true,
-  //     shouldValidate: true,
-  //   });
-
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value = "" }, fieldState: { error } }) => (
         <div>
-          <label className={`mb-1 text-xs ${error ? "text-danger" : "text-slate-400"}`}>
+          <label className={`mb-1 inline-block text-xs font-medium ${error ? "text-danger" : "text-slate-400"}`}>
             {label}
           </label>
           <Select onValueChange={onChange} value={value}>

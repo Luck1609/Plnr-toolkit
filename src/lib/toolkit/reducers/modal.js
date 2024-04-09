@@ -6,11 +6,18 @@ export const initialState = {
     show: false,
     title: "",
     component: "",
-    validation: "",
     mutation: "",
     url: "",
     values: {},
-    action: () => {}
+    // action: () => {},
+  },
+  stepModal: {
+    show: false,
+    title: "",
+    component: "",
+    mutation: "",
+    url: "",
+    values: {},
   },
 };
 
@@ -28,14 +35,19 @@ const ModalReducer = createSlice({
         ...state,
         modal: !payload ? initialState.modal : payload,
       };
+    },
+
+    toggleStepModal: (state, { payload }) => {
+      return {
+        ...state,
+        stepModal: !payload ? initialState.stepModal : payload,
+      };
     }
   },
 });
 
 const { actions, reducer: modalReducer } = ModalReducer;
 
-export const {
-  toggleModal,
-} = actions;
+export const { toggleModal, toggleStepModal } = actions;
 
 export default modalReducer;

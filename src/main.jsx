@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+// import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { SWRConfig } from "swr";
 import App from "./App";
@@ -10,21 +10,26 @@ import { store } from "./lib/toolkit/index";
 import { NoticeModal } from "./components/NoticeModal";
 import FormModal from "./components/FormComponents/FormModal";
 import { Toaster } from "sonner";
+import { LogoutModal } from "./layouts/Auth/LogoutModal";
+import StepFormModal from "./components/FormComponents/StepFormModal";
+import SuspenseLoader from "./components/Suspense";
 
 const { api, http } = Helper,
   fetcher = async (url) => await http.get(`${api}${url}`);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <ThemeProvider>
-      <Provider store={store}>
-        <SWRConfig value={{ fetcher }}>
+  <ThemeProvider>
+    <Provider store={store}>
+      <SWRConfig value={{ fetcher }}>
+        <SuspenseLoader>
           <Toaster />
           <FormModal />
+          <StepFormModal />
           <NoticeModal />
+          <LogoutModal />
           <App />
-        </SWRConfig>
-      </Provider>
-    </ThemeProvider>
-  </StrictMode>
+        </SuspenseLoader>
+      </SWRConfig>
+    </Provider>
+  </ThemeProvider>
 );

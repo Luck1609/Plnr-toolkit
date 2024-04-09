@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
 import { forms } from "@/lib/formGroup";
 import { toggleModal } from "@/lib/toolkit/reducers/modal";
 import useAPI from "@/hooks/useAPI";
+import FormBtn from "./FormBtn";
 
 export default function FormModal() {
   const { modal } = useSelector((state) => state.modal),
@@ -24,7 +24,8 @@ export default function FormModal() {
     {
       handleSubmit,
       reset,
-      watch,
+      // watch,
+      // errors,
       formState: { isDirty, isValid },
     } = method, { makeRequest } = useAPI();
 
@@ -33,15 +34,16 @@ export default function FormModal() {
   }, [modal, reset]);
 
 
-  console.log("modal fields", watch())
 
   const submit = (payload) => {
     makeRequest({
       url: modal.url,
       method: modal.method ?? "post",
       payload,
+      mutation: modal.mutation,
       action: () => {
         if (modal.action) modal.action()
+        close()
       }
     })
   };
@@ -60,12 +62,9 @@ export default function FormModal() {
             </DialogHeader>
 
             <DialogFooter className="mt-4">
-              <Button
-                className="bg-success text-white"
-                disabled={!isValid || !isDirty}
-              >
-                Continue
-              </Button>
+              <FormBtn className="w-44" disabled={!isValid || !isDirty}>
+                Submit
+              </FormBtn>
             </DialogFooter>
           </form>
         </FormProvider>

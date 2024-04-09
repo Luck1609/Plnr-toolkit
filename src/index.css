@@ -11,13 +11,17 @@ body, button {
 }
 
 input {
-  @apply bg-slate-100 dark:text-slate-200 dark:bg-input border dark:border-input text-color text-base p-2;
+  @apply  text-color text-base p-2;
 
   ::placeholder {
     @apply text-slate-400;
   }
   &.error::placeholder {
     @apply text-danger
+  }
+
+  &:not([type="file"]) {
+    @apply bg-slate-100 dark:text-slate-200 dark:bg-input border dark:border-input
   }
 }
 

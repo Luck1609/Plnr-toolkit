@@ -3,6 +3,7 @@ import { columns } from "./partials/table/Columns";
 import BaseTable from "@/components/TableComponent";
 import DynamicUrl from "../../components/DynamicUrl";
 import { TypographySm } from "@/components/Typography";
+import AppActionButtons from "./partials/buttons";
 
 
 const urlOptions = [
@@ -29,18 +30,18 @@ const urlOptions = [
 ];
 
 export default function Applications() {
+  const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter");
   const {data, isLoading} = useSWR("/application");
 
+
+  // console.log("Quarter info", quarterLoading, "data =>", quarter)
 
   return (
     <BaseTable
       // showDetailPanel={true}
       thead={{
         title: "Appliacations Management",
-        btn: {
-          action: () => {alert("yo fish")},
-          text: "Start session"
-        },
+        btn: {show: false, btnComponent: <AppActionButtons isLoading={isLoading || quarterLoading} quarter={quarter?.data} applications={data?.data} />},
         component: ActionTab,
         position: "start"
       }}

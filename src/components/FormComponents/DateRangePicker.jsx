@@ -1,4 +1,3 @@
-import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,35 +8,48 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import dayjs from "dayjs";
+// import { useState } from "react";
 
-export function DateRangePicker({ className }) {
-  const [date, setDate] = useState({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  });
+export function DateRangePicker({ className, label }) {
+  const { watch, setValue } = useFormContext(),
+    from = watch("start_date"),
+    to = watch("end_date");
+
+  const setDate = (selectedDate) => {
+    setValue("start_date", dayjs(selectedDate.from).format("YYYY-MM-DD"), {
+      shouldValidate: true,
+    });
+    setValue("end_date", dayjs(selectedDate.to).format("YYYY-MM-DD"), {
+      shouldValidate: true,
+    });
+  };
+
+  // console.log("Meeting from date", from, "to date =>", to);
 
   return (
     <div className={cn("grid gap-2", className)}>
+      <label className="text-xs">{label}</label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              "w-full justify-start items-center text-left font-normal dark:bg-input"
+              // !date && "text-muted-foreground"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
+            {from ? (
+              to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
+                  {dayjs(from).format("MMM DD, YYYY")} -{" "}
+                  {dayjs(to).format("MMM DD, YYYY")}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                dayjs(from).format("MMM DD, YYYY")
               )
             ) : (
               <span>Pick a date</span>
@@ -48,8 +60,11 @@ export function DateRangePicker({ className }) {
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
-            selected={date}
+            defaultMonth={dayjs(from).toDate()}
+            selected={{
+              from: dayjs().toDate(),
+              to: dayjs().add(1, "month").toDate(),
+            }}
             onSelect={setDate}
             numberOfMonths={2}
           />

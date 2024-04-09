@@ -27,8 +27,8 @@ export default class HttpReq {
     this.http.interceptors.response.use(
       function (response) {
         // console.log("Response status", response);
-        if (response.status === 204)
-          response.data = { message: "Logout successful" };
+        // if (response.status === 204)
+        //   response.data = { message: "Logout successful" };
         return response.data;
       },
       function (error) {
@@ -42,7 +42,6 @@ export default class HttpReq {
     try {
       return await this.http.post(url, payload, options);
     } catch({message}) {
-      console.log("error message rece3ived", message)
       throw new Error(message)
     }
     

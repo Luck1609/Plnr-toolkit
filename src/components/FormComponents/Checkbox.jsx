@@ -36,7 +36,7 @@ const CheckboxItems = ({ errorFieldClassName = "", options = [], name }) => {
                 checked={checked.includes(value)}
                 onCheckedChange={handleCheck(value)}
               />
-              <label htmlFor={value}>{label}</label>
+              <label htmlFor={value} className="text-color dark:text-slate-300">{label}</label>
             </div>
           ))}
 

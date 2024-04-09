@@ -6,6 +6,8 @@ class HelperFunc {
   http = new HttpReq();
   api = env.VITE_API;
 
+  isLive = env.MODE === "production"
+
   isJsonString = (string) => {
     try {
       // console.log('type of json string', typeof(string), ))

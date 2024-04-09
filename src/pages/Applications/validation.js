@@ -1,9 +1,11 @@
 import * as yup from "yup";
 
 export const DeclineReasonValidation = yup.object().shape({
-  reason: yup.string().test("comment", "This field is required", function (reason, {parent}) {
-    return parent.action === "defer";
-  }),
+  reason: yup
+    .string()
+    .test("comment", "This field is required", function (reason, { parent }) {
+      return parent.action === "defer";
+    }),
 
   action: yup.string().required().oneOf(["recommend", "defer"]),
 });
@@ -13,7 +15,7 @@ export const PermitNumberValidation = yup.object().shape({
   dev_permit_num: yup.string().required(),
 });
 
-export const ApplicantInfo = yup.object().shape({
+export const ApplicantInfoValidation = yup.object().shape({
   firstname: yup.string().required(),
   lastname: yup.string().required(),
   contact: yup
@@ -27,46 +29,47 @@ export const ApplicantInfo = yup.object().shape({
     .typeError("Invalid format - must be +233249149420 or 0249149420"),
 
   title: yup.string().required().oneOf(["Mr.", "Mrs.", "Miss", "Dr.", "Eng."]),
-});
 
-export const PlotDetails = yup.object().shape({
-  locality_id: yup.number().required(),
+  locality_id: yup.string().required(),
 
-  sector_id: yup.number().required(),
+  sector_id: yup.string().required(),
 
   block: yup.string().required(),
 
   plot: yup.string().required().typeError(),
 });
 
-export const StructureDetails = yup.object().shape({
+export const StructureDetailsValidation = yup.object().shape({
   type: yup.string().required(),
 
   height: yup
-    .string()
-    .test("storey-level", "Multi storey height cannot be 1", function (value, {parent}) {
-      return parent.type === "Multi storey" &&
-        (value <= 1 || value === undefined)
-        ? false
-        : true;
+    .number()
+    .notRequired()
+    .test(
+      "storey-level",
+      "Multi storey height cannot be 1",
+      function (value, { parent }) {
+        if (parent.type === "multi") return parent.type;
+        else if (parent.type === "single") return value === 1;
+      }
+    ),
+
+  use: yup
+    .array()
+    .required()
+    .test("min", "Use must be at least 1 uses", function (value) {
+      return value.length >= 1;
+    })
+    .test("max", "Details must not exceed 7 uses", function (value) {
+      return parent.use === "Mixed Use" && value > 7 ? false : true;
     }),
 
-  use: yup.array().required().ensure().min(1),
-  // .test('min', 'Details must be at least 2 uses', function (value) {
-  //   return value.length >= 1
-  // })
-  // .test('max', 'Details must not exceed 7 uses', function (value) {
-  //   return (parent.use === 'Mixed Use') && (value > 7) ? false : true
-  // })
-});
-
-export const ApplicationManagement = yup.object().shape({
   shelf: yup.string().notRequired(),
-  existing: yup.string().oneOf(["Yes", "No"]),
+
+  existing: yup.boolean(),
 });
 
-
-export const ScannedDocuments = yup.object().shape({
+export const ScannedDocumentsValidation = yup.object().shape({
   scanned_app_documents: yup
     .mixed()
     .notRequired()
@@ -88,7 +91,7 @@ export const ScannedDocuments = yup.object().shape({
     }),
 });
 
-export const OtherDocuments = yup.object().shape({
+export const OtherDocumentsValidation = yup.object().shape({
   other_documents: yup
     .mixed()
     .notRequired()
@@ -110,4 +113,10 @@ export const OtherDocuments = yup.object().shape({
     }),
 });
 
-export const PreviewData = yup.object().shape({});
+export const PreviewDataValidation = yup.object().shape({});
+
+export const SessionValidation = yup.object().shape({
+  name: yup.string().required(),
+  start_date: yup.date().required(),
+  end_date: yup.date().required(),
+});
