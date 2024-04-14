@@ -29,6 +29,8 @@ export function NoticeModal() {
     })
   }
 
+  console.log("Notice info", notice)
+
   return (
     <AlertDialog open={notice.show}>
       <AlertDialogContent className="dark:!bg-default">

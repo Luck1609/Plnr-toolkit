@@ -1,23 +1,22 @@
-import { useDispatch } from 'react-redux'
-import { Button } from '@/components/ui/button'
-import { toggleModal } from '@/lib/toolkit/reducers/modal'; 
+import { useDispatch } from "react-redux";
+import { Button } from "@/components/ui/button";
+import { toggleNotice } from "@/lib/toolkit/reducers/notice";
 
-export default function PrepMeetingBtn() {
+export default function PrepMeetingBtn({ id }) {
   const dispatch = useDispatch();
+
+  console.log("Preparation id", id);
 
   const toggleForm = () =>
     dispatch(
-      toggleModal({
+      toggleNotice({
         show: true,
-        title: "Start new permit session",
-        url: "/quarter",
-        component: "session",
-        mutation: "/application",
-        values: {
-          name: "",
-          start_date: "",
-          end_date: "",
-        },
+        title: "End Session",
+        url: `/finalize-session/${id}`,
+        message:
+          "You want to end this session? You cannot recieve any application if you proceed with this action. Do you still want to continue with this action?",
+        mutation: `/application`,
+        method: "patch",
       })
     );
 

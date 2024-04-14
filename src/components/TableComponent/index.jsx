@@ -22,6 +22,7 @@ import propTypes from "prop-types";
 import { useState } from "react";
 import Loader from "../Loader";
 import THeader from "./THeader";
+import RowSelector from "./RowSelector";
 
 
 
@@ -45,7 +46,7 @@ BaseTable.propTypes = {
   }),
 };
 
-export default function BaseTable({ data, columns, thead, showDetailPanel = false, isLoading = true }) {
+export default function BaseTable({ data, columns, thead, selectedRows, showDetailPanel = false, isLoading = true }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState(
     []
@@ -81,8 +82,13 @@ export default function BaseTable({ data, columns, thead, showDetailPanel = fals
 
 
   return (
-    <div className="w-11/12 mx-auto p-4 bg-white rounded dark:bg-default">
+    <div className="w-11/12 mx-auto p-4 bg-white rounded dark:bg-default mb-10">
       {thead && <THeader options={thead} table={table} />}
+      {selectedRows && (
+        <>Rows are available
+          <RowSelector rows={table.getFilteredSelectedRowModel().rows} options={selectedRows} />
+        </>
+      )}
 
       <div className="">
         <Table>
@@ -143,10 +149,10 @@ export default function BaseTable({ data, columns, thead, showDetailPanel = fals
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        {/* <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+        </div> */}
         <div className="space-x-2">
           <Button
             variant="outline"

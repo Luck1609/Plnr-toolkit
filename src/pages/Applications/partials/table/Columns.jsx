@@ -3,9 +3,7 @@ import Actions from "@/components/TableComponent/Actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { togglePreviewModal } from "@/lib/toolkit/reducers/modal";
 
-
-
-export const columns = (dispatch) => ([
+export const columns = (dispatch) => [
   {
     id: "select",
     header: ({ table }) => (
@@ -65,7 +63,11 @@ export const columns = (dispatch) => ([
       row: {
         original: { locality, sector, block, plot },
       },
-    }) => <>{locality?.name} {sector?.name} {block} {plot}</>,
+    }) => (
+      <>
+        {locality?.name} {sector?.name} {block} {plot}
+      </>
+    ),
   },
   {
     accessorKey: "shelf",
@@ -75,15 +77,27 @@ export const columns = (dispatch) => ([
     id: "actions",
     enableHiding: false,
 
-    cell: ({ row: { original: { id } } }) => {
+    cell: ({
+      row: {
+        original: { id },
+      },
+    }) => {
       return (
-        <Actions 
+        <Actions
           options={[
             {
               label: "View",
               icon: <Eye className="h-5 w-5" />,
-              action: () => dispatch(togglePreviewModal({data: {id}, show: true, component: "application", title: "Application details"}))
-            }
+              action: () =>
+                dispatch(
+                  togglePreviewModal({
+                    data: { id },
+                    show: true,
+                    component: "application",
+                    title: "Application details",
+                  })
+                ),
+            },
           ]}
           editAction={{
             show: true,
@@ -92,13 +106,18 @@ export const columns = (dispatch) => ([
               method: "patch",
               mutation: `/application`,
               content: "application",
-              values: {
-
-              }
-            }
+              values: {},
+            },
+          }}
+          deleteAction={{
+            show: true,
+            url: `/application/${id}`,
+            method: "delete",
+            mutation: `/application`,
+            message: "application",
           }}
         />
       );
     },
   },
-]);
+];

@@ -5,7 +5,7 @@ import BaseTable from "@/components/TableComponent";
 import DynamicUrl from "../../components/DynamicUrl";
 import { TypographySm } from "@/components/Typography";
 import AppActionButtons from "./partials/buttons";
-
+import BatchAction from "./partials/BatchAction";
 
 const urlOptions = [
   {
@@ -31,27 +31,40 @@ const urlOptions = [
 ];
 
 export default function Applications() {
-  const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter"), {data, isLoading} = useSWR("/application"), dispatch = useDispatch();
+  const { data, isLoading } = useSWR("/application"),
+    dispatch = useDispatch();
+  // const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter"), {data, isLoading} = useSWR("/application"), dispatch = useDispatch();
 
-
-  // console.log("Quarter info", quarterLoading, "data =>", quarter)
+  console.log("Quarter info", data);
 
   return (
     <BaseTable
-      // showDetailPanel={true}
       thead={{
         title: "Appliacations Management",
-        btn: {show: false, btnComponent: <AppActionButtons isLoading={isLoading || quarterLoading} quarter={quarter?.data} applications={data?.data} />},
+        btn: {
+          show: false,
+          btnComponent: (
+            <AppActionButtons
+              isLoading={isLoading}
+              quarter={data?.data}
+              applications={data?.data?.applications}
+            />
+          ),
+        },
         component: ActionTab,
-        position: "start"
+        position: "start",
       }}
-      data={data?.data ?? []}
+      selectedRows={{
+        component: ({rows}) => (
+          <BatchAction rows={rows} />
+        )
+      }}
+      data={data?.data?.applications ?? []}
       columns={columns(dispatch)}
       isLoading={isLoading}
     />
   );
 }
-
 
 const ActionTab = () => {
   return (
@@ -68,5 +81,5 @@ const ActionTab = () => {
         {/* <Filter table={table} /> */}
       </div>
     </div>
-  )
-}
+  );
+};

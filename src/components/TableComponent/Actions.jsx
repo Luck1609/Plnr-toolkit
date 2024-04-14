@@ -23,8 +23,8 @@ export default function Actions({
   const processDelete = () =>
     dispatch(
       toggleNotice({
-        show: true,
-        ...deleteAction?.options
+        ...deleteAction,
+        message: `Do you want to delete this ${deleteAction.name}? this action cannot be reversed. Do you wish to continue?`
       })
     );
 

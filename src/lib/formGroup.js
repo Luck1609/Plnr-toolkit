@@ -1,8 +1,10 @@
 import ApplicationForms from "@/pages/Applications/partials/Forms/ApplicationFoms";
 import { submitApplication } from "@/pages/Applications/partials/Forms/ApplicationFoms/submitHandler";
 import SessionForm from "@/pages/Applications/partials/Forms/Session";
+import MeetingScheduleForm from "@/pages/Applications/partials/buttons/MeetingScheduleBtn/MeetingScheduleForm";
 import {
   ApplicantInfoValidation,
+  MeetingValidation,
   PreviewDataValidation,
   ScannedDocumentsValidation,
   SessionValidation,
@@ -20,7 +22,10 @@ import { UserForm } from "@/pages/Staff/partials/Form";
 import { UserFormValidation } from "@/pages/Staff/partials/validation";
 
 
-
+const meetings = {
+  form: MeetingScheduleForm,
+  validation: MeetingValidation
+}
 
 export const forms = {
   user: { form: UserForm, validation: UserFormValidation },
@@ -28,6 +33,8 @@ export const forms = {
   locality: { form: LocalityForm, validation: LocalityValidation },
   sector: { form: SectorForm, validation: SectorValidation },
   session: { form: SessionForm, validation: SessionValidation },
+  tsc: meetings,
+  spc: meetings,
   application: {
     forms: ApplicationForms,
     length: 3,

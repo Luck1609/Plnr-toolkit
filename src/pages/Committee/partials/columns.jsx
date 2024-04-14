@@ -57,7 +57,11 @@ export const columns = [
     id: "actions",
     enableHiding: false,
 
-    cell: ({ row: { original: { id, name, email, contact, role, designation } } }) => {
+    cell: ({
+      row: {
+        original: { id, name, email, contact, role, designation },
+      },
+    }) => {
       return (
         <Actions
           editAction={{
@@ -78,12 +82,9 @@ export const columns = [
           }}
           deleteAction={{
             show: true,
-            data: {
-              url: `/application/${id}`,
-              message: "",
-              mutation: `/application`,
-              method: "delete"
-            }
+            url: `/committee-member/${id}`,
+            message: "member",
+            mutation: `/application`,
           }}
         />
       );

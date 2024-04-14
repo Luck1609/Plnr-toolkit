@@ -120,3 +120,8 @@ export const SessionValidation = yup.object().shape({
   start_date: yup.date().required(),
   end_date: yup.date().required(),
 });
+
+export const MeetingValidation = yup.object().shape({
+  venue: yup.string().required(),
+  date: yup.date().required()
+});
