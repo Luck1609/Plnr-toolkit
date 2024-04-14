@@ -13,6 +13,7 @@ import { Toaster } from "sonner";
 import { LogoutModal } from "./layouts/Auth/LogoutModal";
 import StepFormModal from "./components/FormComponents/StepFormModal";
 import SuspenseLoader from "./components/Suspense";
+import Modal from "./components/Modal";
 
 const { api, http } = Helper,
   fetcher = async (url) => await http.get(`${api}${url}`);
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Toaster />
           <FormModal />
           <StepFormModal />
+          <Modal />
           <NoticeModal />
           <LogoutModal />
           <App />

@@ -1,67 +1,25 @@
-import { useEffect, useMemo } from "react";
+
 import { useFormContext } from "react-hook-form";
-import useSWR from "swr";
 import { Input } from "@/components/FormComponents/Input";
 import PhoneNumberInput from "@/components/PhoneNumberInput";
 import { SelectField } from "@/components/SelectField";
-import Helper from "@/helper";
 
-const { isJsonString } = Helper,
-  areas = { localities: [], sectors: {} };
+export default function ApplicantInfo({ locations: { localities, sectors } }) {
+  const { watch } = useFormContext(),
+    locality = watch("locality_id"),
+    sector = watch("sector_id");
 
-export default function ApplicantInfo() {
-  const { data } = useSWR("/locality"), {watch, reset} = useFormContext(), locality = watch("locality_id"), sector = watch("sector_id");
 
-  const { localities, sectors } = useMemo(() => {
-    return data?.data
-      ? data.data.reduce(
-          (allLocalities, { name, id, sectors }) => {
-            return {
-              ...allLocalities,
-              localities: [
-                ...allLocalities.localities,
-                {
-                  label: name,
-                  value: id,
-                },
-              ],
-              sectors: {
-                ...allLocalities.sectors,
-                [id]: {
-                  ...sectors.reduce((allSectors, { id: sectorID, name, blocks }) => {
-                    return {
-                      ...allSectors,
-                      [sectorID]: {
-                        value: sectorID,
-                        label: name,
-                        blocks: blocks ? isJsonString(blocks).reduce((allBlocks, block) => ([...allBlocks, {label: block, value: block}]), []) : [],
-                      },
-                    };
-                  }, []),
-                },
-              },
-            };
-          },
-          areas
-        )
-      : areas;
-  }, [data?.data]);
 
-useEffect(() => {
-  reset({
-    ...watch(),
-    sector_id: null,
-    block: null
-  })
-}, [locality, reset, watch])
+  // useEffect(() => {
+  //   setValue("sector_id", "");
+  //   setValue("block", "");
+  // }, [locality, setValue]);
 
-useEffect(() => {
-  reset({
-    ...watch(),
-    block: null
-  })
-}, [sector, reset, watch])
-
+  // useEffect(() => {
+  //   setValue("block", "");
+  // }, [sector, setValue]);
+  
 
   return (
     <div className="space-y-4">
@@ -106,7 +64,7 @@ useEffect(() => {
             },
           ]}
         />
-        
+
         <PhoneNumberInput
           name="contact"
           label="Phone no."

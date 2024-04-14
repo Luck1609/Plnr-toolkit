@@ -1,37 +1,17 @@
-import { useFormContext } from "react-hook-form";
-import { CircleCheckBig, CircleX } from "lucide-react";
 import { Fragment } from "react";
+import useSWR from "swr";
+import { CircleCheckBig, CircleX } from "lucide-react";
+import Loader from "@/components/Loader";
+import { landUse } from "./Forms/ApplicationFoms/Preview";
 
-export const landUse = {
-  residential: { color: "border-[brown] bg-[brown]", value: "Residential" },
-  commercial: { color: "border-blue-600 bg-blue-600", value: "Commercial" },
-  "civic_&_culture": {
-    color: "border-red-500 bg-red-500",
-    value: "Civic & Culture",
-  },
-  industrial: { color: "border-violet-500 bg-violet-500", value: "Industrial" },
-  open_space: { color: "border-lime-500 bg-lime-500", value: "Open space" },
-  education: {
-    color: "bg-yellow-200 border-2 border-red-500",
-    value: "Education",
-  },
-};
 
-export default function Preview({ locations: { localities, sectors } }) {
-  // console.log("locality info => ", localities, "sector info =>", sectors);
 
-  const { watch } = useFormContext(),
-    locality = localities.filter(
-      ({ value }) => value === watch("locality_id")
-    )[0].label,
-    sector = sectors[watch("locality_id")][watch("sector_id")],
-    block = sector.blocks.filter(({ label }) => label === watch("block"))[0]
-      .label,
-    uses = watch("use");
+export default function PreviewApplications({ data: { id } }) {
+  const { data, isLoading } = useSWR(`/application/${id}`);
 
-  console.log("sector infor preview", watch());
+  const application = data?.data ?? {};
 
-  const landUses = uses.reduce(
+  const landUses = application?.use ? JSON.parse(application.use).reduce(
     (uses, use) => [
       ...uses,
       {
@@ -44,66 +24,78 @@ export default function Preview({ locations: { localities, sectors } }) {
       },
     ],
     []
-  );
+  ) : [];
 
-  return (
-    <div className="grid lg:grid-cols-2 gap-4">
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <div className="grid lg:grid-cols-3 gap-4 gap-y-6">
       <div className="bg-input py-1.5 px-3 rounded">
         <label className="text-sm mb-1 inline-block">Full name</label>
         <div className="">
-          {`${watch("title")} ${watch("firstname")} ${watch("lastname")}`}
+          {`${application?.title} ${application?.firstname} ${application?.lastname}`}
         </div>
       </div>
 
       <div className="bg-input py-1.5 px-3 rounded">
         <label className="text-sm mb-1 inline-block">Phone no.</label>
-        <div className="">{watch("contact")}</div>
+        <div className="">{application?.contact}</div>
       </div>
 
-      <div className="bg-input py-1.5 px-3 rounded lg:col-span-2">
-        <label className="text-sm mb-1 inline-block">Plot details</label>
-        <div className="">{`${locality}, ${
-          sector.label
-        }, ${block}, Plot no. ${watch("plot")}`}</div>
+      <div className="bg-input py-1.5 px-3 rounded">
+        <label className="text-sm mb-1 inline-block">Application no.</label>
+        <div className="">{application?.application_num}</div>
       </div>
-      <div className="bg-input py-1.5 px-3 rounded lg:col-span-2">
-        <label className="text-sm mb-1 inline-block">Land use</label>
-        <div className="grid grid-cols-3 gap-2">
-          {landUses.map(({ label }, index) => (
-            <Fragment key={index.toString()}>{label}</Fragment>
-          ))}
+
+      <div className="lg:col-span-3 grid lg:grid-cols-5 gap-4">
+        <div className="bg-input py-1.5 px-3 rounded lg:col-span-2">
+          <label className="text-sm mb-1 inline-block">Plot details</label>
+          <div className="">{`${application?.locality?.name}, ${application?.sector?.name}, ${application?.block}, Plot no. ${application?.plot}`}</div>
+        </div>
+        <div className="bg-input py-1.5 px-3 rounded lg:col-span-3">
+          <label className="text-sm mb-1 inline-block">Land use</label>
+          <div className="grid grid-cols-3 gap-2">
+            {landUses.map(({ label }, index) => (
+              <Fragment key={index.toString()}>{label}</Fragment>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="lg:col-span-2 grid lg:grid-cols-4 gap-2">
+      <div className="lg:col-span-3 grid lg:grid-cols-4 gap-2">
         <div className="bg-input py-1.5 px-3 rounded">
           <label className="text-sm mb-1 inline-block">Type</label>
-          <div className="capitalize">{watch("type")}</div>
+          <div className="capitalize">{application?.type}</div>
         </div>
 
         <div className="bg-input py-1.5 px-3 rounded">
           <label className="text-sm mb-1 inline-block">Height</label>
-          <div className="">{watch("height")}</div>
+          <div className="">{application?.height}</div>
         </div>
 
         <div className="bg-input py-1.5 px-3 rounded">
           <label className="text-sm mb-1 inline-block">Shelf no.</label>
-          <div className="">{`${watch("shelf") ?? "N/A"}`}</div>
+          <div className="">{`${application?.shelf ?? "N/A"}`}</div>
         </div>
 
         <div className="bg-input py-1.5 px-3 rounded">
           <label className="text-sm mb-1 inline-block">Already exist</label>
           <div className="">
-            {watch("existing") ? <span>Yes</span> : <span>No</span>}
+            {application?.existing ? <span>Yes</span> : <span>No</span>}
           </div>
         </div>
+      </div>
+
+      <div className="bg-input py-1.5 px-3 rounded">
+        <label className="text-sm mb-1 inline-block">Dev. permit no.</label>
+        <div className="">{application?.dev_permit_num ?? "N/A"}</div>
       </div>
 
       <div className="bg-input py-1.5 px-3 rounded lg:col-span-2 ">
         <label className="text-sm mb-1 inline-block">Scanned documents</label>
 
         <div className="grid grid-cols-2 gap-4">
-          {watch("epa_cert").length > 0 ? (
+          {application?.epa_cert?.length > 0 ? (
             <div className="flex items-center space-x-2">
               <CircleCheckBig className="text-green-500" size={18} />
               <span className="">EPA certified</span>
@@ -114,7 +106,7 @@ export default function Preview({ locations: { localities, sectors } }) {
               <span className="">EPA certificate N/A</span>
             </div>
           )}
-          {watch("fire_cert").length > 0 ? (
+          {application?.fire_cert?.length > 0 ? (
             <div className="flex items-center space-x-2">
               <CircleCheckBig className="text-green-500" size={18} />
               <span className="">GNFS certified</span>

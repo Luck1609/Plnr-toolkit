@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useDispatch } from "react-redux";
 import { columns } from "./partials/table/Columns";
 import BaseTable from "@/components/TableComponent";
 import DynamicUrl from "../../components/DynamicUrl";
@@ -30,8 +31,7 @@ const urlOptions = [
 ];
 
 export default function Applications() {
-  const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter");
-  const {data, isLoading} = useSWR("/application");
+  const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter"), {data, isLoading} = useSWR("/application"), dispatch = useDispatch();
 
 
   // console.log("Quarter info", quarterLoading, "data =>", quarter)
@@ -46,7 +46,7 @@ export default function Applications() {
         position: "start"
       }}
       data={data?.data ?? []}
-      columns={columns}
+      columns={columns(dispatch)}
       isLoading={isLoading}
     />
   );
@@ -67,33 +67,6 @@ const ActionTab = () => {
         </div>
         {/* <Filter table={table} /> */}
       </div>
-      {/* <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
-            Columns <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end">
-          {table
-            .getAllColumns()
-            .filter((column) => column.getCanHide())
-            .map((column) => {
-              return (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) =>
-                    column.toggleVisibility(!!value)
-                  }
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              );
-            })}
-        </DropdownMenuContent>
-      </DropdownMenu> */}
     </div>
   )
 }

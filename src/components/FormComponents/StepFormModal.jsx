@@ -45,15 +45,17 @@ export default function StepFormModal() {
   // console.log("stepModal fields", watch(), "form errors =>", errors);
 
   const submit = (payload) => {
+    payload = form?.submit ? form.submit(payload) : payload
+
     makeRequest({
       url: stepModal.url,
       method: stepModal.method ?? "post",
       payload,
       mutation: stepModal.mutation,
-      action: () => {
-        if (stepModal.action) stepModal.action();
-        close();
-      },
+      // action: () => {
+      //   if (stepModal.action) stepModal.action();
+      //   close();
+      // },
     });
   };
 

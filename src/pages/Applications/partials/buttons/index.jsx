@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import SessionBtn from "./SessionBtn";
 import NewAppBtn from "./NewAppBtn";
+import EndSessionBtn from "./EndSessionBtn";
+import PrepMeetingBtn from "./PrepMeetingBtn";
 
 export default function AppActionButtons({ quarter, applications, isLoading }) {
   return (
@@ -14,7 +16,8 @@ export default function AppActionButtons({ quarter, applications, isLoading }) {
 
         {
           (applications?.length > 0 && !quarter?.finalized) ? (
-            <Button className="" variant="danger">End session</Button>
+            // <EndSessionBtn />
+            <PrepMeetingBtn />
           ) : null
         }
 

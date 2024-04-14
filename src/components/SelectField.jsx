@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Fragment } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { TypographyXs } from "./Typography";
 
@@ -18,7 +17,11 @@ export function SelectField({ name, options, label }) {
       name={name}
       render={({ field: { onChange, value = "" }, fieldState: { error } }) => (
         <div>
-          <label className={`mb-1 inline-block text-xs font-medium ${error ? "text-danger" : "text-slate-400"}`}>
+          <label
+            className={`mb-1 inline-block text-xs font-medium ${
+              error ? "text-danger" : "text-slate-400"
+            }`}
+          >
             {label}
           </label>
           <Select onValueChange={onChange} value={value}>
@@ -31,16 +34,16 @@ export function SelectField({ name, options, label }) {
             >
               <SelectValue placeholder={label} className="" />
             </SelectTrigger>
+
             <SelectContent className="bg-slate-100 dark:!bg-input max-h-72">
-              {options?.map(({ label: labelProp, value }) => (
-                <Fragment key={value}>
-                  <SelectItem
-                    value={value}
-                    className="cursor-pointer !hover:bg-active-hover"
-                  >
-                    {labelProp}
-                  </SelectItem>
-                </Fragment>
+              {options?.map(({ label: labelProp, value }, index) => (
+                <SelectItem
+                  key={`${value}_${index}`}
+                  className="cursor-pointer !hover:bg-active-hover"
+                  value={value}
+                >
+                  {labelProp}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

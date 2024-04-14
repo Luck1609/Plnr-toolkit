@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@/components/ui/button'
 import { toggleModal } from '@/lib/toolkit/reducers/modal'; 
 
-export default function EndSessionBtn() {
+export default function PrepMeetingBtn() {
   const dispatch = useDispatch();
 
   const toggleForm = () =>
@@ -23,7 +23,7 @@ export default function EndSessionBtn() {
 
   return (
     <Button variant="danger" onClick={toggleForm}>
-      End session
+      Prep for meeting
     </Button>
   );
 }

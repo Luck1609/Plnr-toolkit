@@ -1,8 +1,9 @@
 import ApplicationForms from "@/pages/Applications/partials/Forms/ApplicationFoms";
+import { submitApplication } from "@/pages/Applications/partials/Forms/ApplicationFoms/submitHandler";
 import SessionForm from "@/pages/Applications/partials/Forms/Session";
 import {
   ApplicantInfoValidation,
-  OtherDocumentsValidation,
+  PreviewDataValidation,
   ScannedDocumentsValidation,
   SessionValidation,
   StructureDetailsValidation,
@@ -29,12 +30,13 @@ export const forms = {
   session: { form: SessionForm, validation: SessionValidation },
   application: {
     forms: ApplicationForms,
-    length: 4,
+    length: 3,
+    submit: submitApplication,
     validations: [
       ApplicantInfoValidation,
       StructureDetailsValidation,
       ScannedDocumentsValidation,
-      OtherDocumentsValidation,
+      PreviewDataValidation
     ],
   },
 };

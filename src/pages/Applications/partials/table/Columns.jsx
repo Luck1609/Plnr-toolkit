@@ -1,9 +1,11 @@
+import { Eye } from "lucide-react";
 import Actions from "@/components/TableComponent/Actions";
 import { Checkbox } from "@/components/ui/checkbox";
+import { togglePreviewModal } from "@/lib/toolkit/reducers/modal";
 
 
 
-export const columns = [
+export const columns = (dispatch) => ([
   {
     id: "select",
     header: ({ table }) => (
@@ -46,7 +48,7 @@ export const columns = [
     header: "Appl. no.",
   },
   {
-    accessorKey: "amount",
+    accessorKey: "contact",
     header: "Phone no.",
   },
   {
@@ -76,6 +78,13 @@ export const columns = [
     cell: ({ row: { original: { id } } }) => {
       return (
         <Actions 
+          options={[
+            {
+              label: "View",
+              icon: <Eye className="h-5 w-5" />,
+              action: () => dispatch(togglePreviewModal({data: {id}, show: true, component: "application", title: "Application details"}))
+            }
+          ]}
           editAction={{
             show: true,
             data: {
@@ -92,4 +101,4 @@ export const columns = [
       );
     },
   },
-];
+]);

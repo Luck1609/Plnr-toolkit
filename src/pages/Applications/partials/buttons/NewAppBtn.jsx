@@ -25,11 +25,13 @@ export default function NewAppBtn() {
           plot: "",
           type: "",
           height: 1,
-          use: "",
+          use: [],
           shelf: "",
           existing: false,
-          scanned_app_documents: "",
-          other_documents: "",
+          epa_cert: "",
+          fire_cert: "",
+          // scanned_app_documents: "",
+          // other_documents: "",
         },
       })
     );

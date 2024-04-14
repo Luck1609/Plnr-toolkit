@@ -14,7 +14,7 @@ export default class HttpReq {
     this.http.defaults.withXSRFToken = true;
     this.http.interceptors.request.use(
       function (config) {
-        // console.log('Axios configuration information', config)
+        config.headers.Accept = "application/json"
         return config;
       },
       function (error) {
