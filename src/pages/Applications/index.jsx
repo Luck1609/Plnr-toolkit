@@ -6,6 +6,8 @@ import DynamicUrl from "../../components/DynamicUrl";
 import { TypographySm } from "@/components/Typography";
 import AppActionButtons from "./partials/buttons";
 import BatchAction from "./partials/BatchAction";
+import Meeting from "@/widgets/Meeting";
+// import TablePrint from "@/components/TableComponent/TablePrint";
 
 const urlOptions = [
   {
@@ -33,36 +35,39 @@ const urlOptions = [
 export default function Applications() {
   const { data, isLoading } = useSWR("/application"),
     dispatch = useDispatch();
-  // const {data: quarter, isLoading: quarterLoading} = useSWR("/current-quarter"), {data, isLoading} = useSWR("/application"), dispatch = useDispatch();
-
-  console.log("Quarter info", data);
 
   return (
-    <BaseTable
-      thead={{
-        title: "Appliacations Management",
-        btn: {
-          show: false,
-          btnComponent: (
-            <AppActionButtons
-              isLoading={isLoading}
-              quarter={data?.data}
-              applications={data?.data?.applications}
-            />
-          ),
-        },
-        component: ActionTab,
-        position: "start",
-      }}
-      selectedRows={{
-        component: ({rows}) => (
-          <BatchAction rows={rows} />
-        )
-      }}
-      data={data?.data?.applications ?? []}
-      columns={columns(dispatch)}
-      isLoading={isLoading}
-    />
+    <>
+      <BaseTable
+        thead={{
+          title: "Appliacations Management",
+          btn: {
+            show: false,
+            btnComponent: (
+              <AppActionButtons
+                isLoading={isLoading}
+                quarter={data?.data}
+                applications={data?.data?.applications}
+              />
+            ),
+          },
+          component: ActionTab,
+          position: "start",
+        }}
+        selectedRows={{
+          component: (rows) =>
+            isLoading || !data?.data?.id ? (
+              <></>
+            ) : (
+              <BatchAction rows={rows} data={data?.data} />
+            ),
+        }}
+        data={data?.data?.applications ?? []}
+        columns={columns(dispatch)}
+        isLoading={isLoading}
+      />
+
+    </>
   );
 }
 

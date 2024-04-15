@@ -24,7 +24,7 @@ export default function THeader({
   return (
     <>
       {!overrideDefaultComponent && (
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between">
           <TypographyH4 className="">{title}</TypographyH4>
 
           <div className="flex items-center space-x-4">

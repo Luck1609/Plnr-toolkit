@@ -1,10 +1,9 @@
-import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SessionBtn from "./SessionBtn";
 import NewAppBtn from "./NewAppBtn";
-// import EndSessionBtn from "./EndSessionBtn";
 import PrepMeetingBtn from "./PrepMeetingBtn";
 import MeetingScheduleBtn from "./MeetingScheduleBtn";
+import PrintBtn from "./PrintBtn";
 
 export default function AppActionButtons({ quarter, applications, isLoading }) {
   return !isLoading ? (
@@ -17,10 +16,7 @@ export default function AppActionButtons({ quarter, applications, isLoading }) {
           {!quarter?.tsc ? (
             <MeetingScheduleBtn />
           ) : null}
-          <Button className="flex items-center space-x-1" variant="primary">
-            <Printer size={18} />
-            <span className="">Print</span>
-          </Button>
+          <PrintBtn data={{applications, title: quarter.title}} />
         </>
       ) : (
         <NewAppBtn />

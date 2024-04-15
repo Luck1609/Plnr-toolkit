@@ -8,24 +8,33 @@ import {
 } from "./ui/dialog";
 import { togglePreviewModal } from "@/lib/toolkit/reducers/modal";
 import { display } from "@/lib/displayGroup";
+import { cn } from "@/lib/utils";
 
 export default function Modal() {
   const { previewModal } = useSelector((state) => state.modal),
     dispatch = useDispatch(),
     close = () => dispatch(togglePreviewModal("close"));
 
-    const Component = display[previewModal?.component]
+  const Component = display[previewModal?.component];
 
   return (
     <Dialog open={previewModal.show} onOpenChange={close}>
-      <DialogContent className="dark:!bg-default w-full max-w-3xl">
-        <DialogHeader>
-          <DialogTitle className="text-center mb-3 border-b dark:border-input pb-3">
-            {previewModal.title}
-          </DialogTitle>
+      <DialogContent className={cn("dark:!bg-default w-full max-w-3xl", previewModal?.className)}>
+        {previewModal?.wrap === false ? (
+          <Component data={previewModal?.data} />
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-center mb-3 border-b dark:border-input pb-3">
+                {previewModal.title}
+              </DialogTitle>
 
-          <div className="!text-slate-300">{Component ? <Component data={previewModal?.data} /> : null}</div>
-        </DialogHeader>
+              <div className="!text-slate-300">
+                {Component ? <Component data={previewModal?.data} /> : null}
+              </div>
+            </DialogHeader>
+          </>
+        )}
 
         {/* <DialogFooter className="mt-4">
           

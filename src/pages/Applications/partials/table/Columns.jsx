@@ -71,7 +71,7 @@ export const columns = (dispatch) => [
   },
   {
     accessorKey: "shelf",
-    header: "Shelf no.",
+    header: "Shelf",
   },
   {
     id: "actions",

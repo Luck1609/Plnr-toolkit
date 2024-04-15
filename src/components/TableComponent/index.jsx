@@ -41,8 +41,11 @@ BaseTable.propTypes = {
       text: propTypes.string,
       action: propTypes.func,
       show: propTypes.bool,
-      btnComponent: propTypes.object
-    })
+      btnComponent: propTypes.object,
+    }),
+  }),
+  selectedRows: propTypes.shape({
+    component: propTypes.func,
   }),
 };
 
@@ -84,11 +87,7 @@ export default function BaseTable({ data, columns, thead, selectedRows, showDeta
   return (
     <div className="w-11/12 mx-auto p-4 bg-white rounded dark:bg-default mb-10">
       {thead && <THeader options={thead} table={table} />}
-      {selectedRows && (
-        <>Rows are available
-          <RowSelector rows={table.getFilteredSelectedRowModel().rows} options={selectedRows} />
-        </>
-      )}
+      {selectedRows && <RowSelector rows={table.getFilteredSelectedRowModel().rows} options={selectedRows} />}
 
       <div className="">
         <Table>

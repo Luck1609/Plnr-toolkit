@@ -10,12 +10,12 @@ import { Button } from "./ui/button";
 export default function ToolTips({ label, value }) {
   return (
     <TooltipProvider>
-      <Tooltip className="flex justify-start YO-FISH">
+      <Tooltip className="">
         <TooltipTrigger asChild>
-          <Button className="!justify-start dark:text-white">{label}</Button>
+          <Button className="!justify-start dark:text-white">{value}</Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>{value}</p>
+          <p>{label}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

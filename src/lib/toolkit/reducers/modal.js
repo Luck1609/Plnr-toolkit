@@ -15,7 +15,9 @@ export const initialState = {
     show: false,
     title: null,
     component: null,
-    data: null
+    data: null,
+    wrap: true,
+    className: null
   },
   stepModal: {
     show: false,
@@ -51,6 +53,7 @@ const ModalReducer = createSlice({
     },
 
     togglePreviewModal: (state, { payload }) => {
+      console.log("Preview modal", payload)
       return {
         ...state,
         previewModal: !payload ? initialState.previewModal : payload,

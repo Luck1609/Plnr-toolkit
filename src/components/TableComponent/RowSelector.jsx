@@ -1,6 +1,3 @@
-
-
-export default function RowSelector({ rows, selectedRows }) {
-  console.log("selected row opitions", selectedRows)
-  return selectedRows?.component(rows);
+export default function RowSelector({ rows, options }) {
+  return <>{options?.component(rows)}</>;
 }

@@ -1,29 +1,31 @@
 import { useDispatch } from 'react-redux'
+import { Printer } from "lucide-react";
 import { Button } from '@/components/ui/button'
-import { toggleModal } from '@/lib/toolkit/reducers/modal'; 
+import { togglePreviewModal } from '@/lib/toolkit/reducers/modal';
 
-export default function PrintBtn() {
+export default function PrintBtn({data, title}) {
   const dispatch = useDispatch();
 
   const toggleForm = () =>
     dispatch(
-      toggleModal({
+      togglePreviewModal({
+        data,
         show: true,
-        title: "Start new permit session",
-        url: "/quarter",
-        component: "session",
-        mutation: "/application",
-        values: {
-          name: "",
-          start_date: "",
-          end_date: "",
-        },
+        component: "applicationPrint",
+        title,
+        wrap: false,
+        className: "!max-w-6xl"
       })
     );
 
   return (
-    <Button variant="success" onClick={toggleForm}>
-      Print
+    <Button
+      className="flex items-center space-x-1"
+      variant="primary"
+      onClick={toggleForm}
+    >
+      <Printer size={18} />
+      <span className="">Print</span>
     </Button>
   );
 }
