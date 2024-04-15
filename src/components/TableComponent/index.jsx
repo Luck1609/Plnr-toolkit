@@ -31,12 +31,14 @@ import RowSelector from "./RowSelector";
 BaseTable.propTypes = {
   data: propTypes.array.isRequired,
   columns: propTypes.array.isRequired,
+  visibleColumns: propTypes.object,
   showDetailPanel: propTypes.bool,
   thead: propTypes.shape({
     title: propTypes.any.isRequired,
     position: propTypes.oneOf(["start", "within", "end"]),
     overrideDefaultComponent: propTypes.bool,
-    component: propTypes.func,
+    component: propTypes.element,
+    // component: propTypes.func,
     btn: propTypes.shape({
       text: propTypes.string,
       action: propTypes.func,
@@ -49,13 +51,12 @@ BaseTable.propTypes = {
   }),
 };
 
-export default function BaseTable({ data, columns, thead, selectedRows, showDetailPanel = false, isLoading = true }) {
+export default function BaseTable({ data, columns, thead, selectedRows, visibleColumns = {}, showDetailPanel = false, isLoading = true }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState(
     []
   );
-  const [columnVisibility, setColumnVisibility] =
-    useState({});
+  const [columnVisibility, setColumnVisibility] = useState(visibleColumns);
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({

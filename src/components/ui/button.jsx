@@ -17,6 +17,8 @@ const buttonVariants = cva(
           "bg-success ring-offset-white focus-visible:ring-emerald-500 text-white dark:ring-offset-emerald-500 dark:focus-visible:ring-teal-300",
         danger:
           "bg-danger ring-offset-white focus-visible:ring-rose-500 text-white dark:ring-offset-rose-500 dark:focus-visible:ring-slate-300",
+        input:
+          "bg-slate-200 text-color hover:bg-slate-300 dark:bg-input ring-offset-white focus-visible:ring-rose-500 dark:text-white dark:ring-offset-rose-500 dark:focus-visible:ring-slate-300",
 
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
       },

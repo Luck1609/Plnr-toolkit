@@ -8,7 +8,6 @@ import PrintBtn from "./PrintBtn";
 export default function AppActionButtons({ quarter, applications, isLoading }) {
   return !isLoading ? (
     <>
-      {console.log("Current quarter info", quarter)}
       {!quarter ? (
         <SessionBtn />
       ) : quarter?.finalized ? (

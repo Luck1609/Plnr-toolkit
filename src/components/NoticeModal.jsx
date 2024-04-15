@@ -10,14 +10,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import useAPI from "@/hooks/useAPI";
 import { toggleNotice } from "@/lib/toolkit/reducers/notice";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export function NoticeModal() {
-  const { notice } = useSelector(state => state.notice), dispatch = useDispatch(), {makeRequest} = useAPI();
+  const { notice } = useSelector(state => state.notice), dispatch = useDispatch(), {makeRequest} = useAPI(), [submitting, setSubmitting] = useState(false)
 
-  const close = () => dispatch(toggleNotice("close"));
+  const close = () => dispatch(toggleNotice("close")), toggleSubmit = (state) => setSubmitting(state);
 
   const submit = () => {
+    toggleSubmit(true)
     makeRequest({
       url: notice.url,
       method: notice.method,
@@ -25,6 +27,10 @@ export function NoticeModal() {
       mutation: notice.mutation,
       action: () => {
         close()
+        toggleSubmit(false)
+      },
+      errAction: () => {
+        toggleSubmit(false)
       }
     })
   }
@@ -41,10 +47,10 @@ export function NoticeModal() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={close} className="bg-danger text-white">
+          <AlertDialogCancel onClick={close} className="bg-danger text-white" disabled={submitting}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction className="bg-primary text-white" onClick={submit}>Continue</AlertDialogAction>
+          <AlertDialogAction className="bg-primary text-white" onClick={submit} disabled={submitting}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -6,27 +6,33 @@ import { togglePreviewModal } from "@/lib/toolkit/reducers/modal";
 export const columns = (dispatch) => [
   {
     id: "select",
-    header: ({ table }) => (
-      <>
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </>
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    header: ({ table }) =>
+      // displayCheckbox ? (
+        <>
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) =>
+              table.toggleAllPageRowsSelected(!!value)
+            }
+            aria-label="Select all"
+          />
+        </>,
+      // ) : null,
+    cell: ({ row }) =>
+      // displayCheckbox ? (
+        <>
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        </>,
+      // ) : null,
     enableSorting: false,
-    enableHiding: false,
+    enableHiding: true
   },
   {
     accessorKey: "name",

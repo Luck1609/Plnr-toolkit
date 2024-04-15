@@ -1,25 +1,27 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from './ui/button';
+import { capitalize } from 'lodash';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-
 
 export default function DynamicUrl({ options, defaultValue, className = "" }) {
   return (
-    <Select>
-      <SelectTrigger className={cn("w-[180px] !border-slate-50 dark:text-slate-200 dark:!bg-input dark:!border-input rounded-l-none", className)}>
-        <SelectValue placeholder={defaultValue} />
-      </SelectTrigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="bg-input rounded-none w-32" asChild>
+        <Button variant="outline">{ capitalize(defaultValue) }</Button>
+      </DropdownMenuTrigger>
 
-      <SelectContent className="!bg-input dark:!borer-input">
-        {options.map(({ value, label }, index) => (
-          <SelectItem
-            className="cursor-pointer"
-            value={value ?? label}
-            key={index.toString()}
-          >
-            {label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      <DropdownMenuContent className={cn("w-40 dark:bg-input", className)}>
+        {
+          options.map(({label, value, action: { changeData, table }}, index) => (
+            <DropdownMenuItem className="bg-input" onClick={() => {
+              changeData(value)
+              defaultValue !== value && table.toggleAllPageRowsSelected(false);
+            }} key={index.toString()}>
+              {label}
+            </DropdownMenuItem>
+          ))
+        }
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

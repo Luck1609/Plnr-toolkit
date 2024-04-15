@@ -56,7 +56,6 @@ export const columns = [
   {
     id: "actions",
     enableHiding: false,
-
     cell: ({
       row: {
         original: { id, name, email, contact, role, designation },
