@@ -1,5 +1,5 @@
 import ApplicationForms from "@/pages/Applications/partials/Forms/ApplicationFoms";
-import { submitApplication } from "@/pages/Applications/partials/Forms/ApplicationFoms/submitHandler";
+import { submitApplication } from "@/lib/submitHandler";
 import SessionForm from "@/pages/Applications/partials/Forms/Session";
 import MeetingScheduleForm from "@/pages/Applications/partials/buttons/MeetingScheduleBtn/MeetingScheduleForm";
 import {
@@ -18,6 +18,8 @@ import {
   LocalityValidation,
   SectorValidation,
 } from "@/pages/Locality/validation";
+import SmsForm from "@/pages/Sms/partials/Form";
+import { Sms_validation } from "@/pages/Sms/validation";
 import { UserForm } from "@/pages/Staff/partials/Form";
 import { UserFormValidation } from "@/pages/Staff/partials/validation";
 
@@ -46,4 +48,5 @@ export const forms = {
       PreviewDataValidation
     ],
   },
+  sms: {form: SmsForm, validation: Sms_validation}
 };

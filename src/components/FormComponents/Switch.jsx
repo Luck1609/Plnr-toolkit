@@ -19,13 +19,13 @@ const SwitchComponent = ({ className, label = "", name, position = "end" }) => {
       name={name}
       render={({ field: { onChange, value } }) => (
         <div className={cn("flex items-center space-x-2", className)}>
-          {position === "start" && <Label label={label} />}
+          {position === "start" && <Label className="align-middle" label={label} />}
           <Switch
             checked={value}
             onCheckedChange={onChange}
             className="dark:data-[state=checked]:bg-slate-500 dark:data-[state=unchecked]:bg-slate-600"
           />
-          {position === "end" && <Label label={label} />}
+          {position === "end" && <Label className="align-middle" label={label} />}
         </div>
       )}
     />

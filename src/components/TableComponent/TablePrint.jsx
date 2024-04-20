@@ -14,7 +14,6 @@ export default function TablePrint({ data: { applications, title} }) {
   const ref = useRef(), handlePrint = useReactToPrint({
     content: () => ref.current,
     documentTitle: "Document title here",
-
   })
 
   return (

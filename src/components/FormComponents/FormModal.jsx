@@ -18,16 +18,18 @@ export default function FormModal() {
   const { modal } = useSelector((state) => state.modal),
     dispatch = useDispatch(),
     close = () => dispatch(toggleModal("close")),
-    validation = modal.show ? yupResolver(forms[modal.component]?.validation) : "",
+    formGroup = forms?.[modal.component],
+    validation = modal.show ? yupResolver(formGroup?.validation) : "",
     method = useForm({ mode: "all", resolver: validation }),
-    Form = forms?.[modal.component]?.form,
+    Form = formGroup?.form,
     {
       handleSubmit,
       reset,
       // watch,
       // errors,
       formState: { isDirty, isValid },
-    } = method, { makeRequest } = useAPI();
+    } = method,
+    { makeRequest } = useAPI();
 
   useEffect(() => {
     if (modal.show) reset(modal.values);
@@ -36,6 +38,8 @@ export default function FormModal() {
 
 
   const submit = (payload) => {
+    payload = formGroup?.submit ? formGroup.submit() : payload;
+
     makeRequest({
       url: modal.url,
       method: modal.method ?? "post",
@@ -47,6 +51,8 @@ export default function FormModal() {
       }
     })
   };
+
+  // console.log("Watching files for errors", errors, "formn values =>", watch())
 
   return (
     <Dialog open={modal.show} onOpenChange={close}>

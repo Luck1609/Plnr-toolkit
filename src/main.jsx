@@ -9,11 +9,12 @@ import { Provider } from "react-redux";
 import { store } from "./lib/toolkit/index";
 import { NoticeModal } from "./components/NoticeModal";
 import FormModal from "./components/FormComponents/FormModal";
-import { Toaster } from "sonner";
+// import { Toaster } from "sonner";
 import { LogoutModal } from "./layouts/Auth/LogoutModal";
 import StepFormModal from "./components/FormComponents/StepFormModal";
 import SuspenseLoader from "./components/Suspense";
 import Modal from "./components/Modal";
+import { Toaster } from "./components/ui/toaster";
 
 const { api, http } = Helper,
   fetcher = async (url) => await http.get(`${api}${url}`);

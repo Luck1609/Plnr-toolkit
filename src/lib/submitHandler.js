@@ -1,5 +1,4 @@
 export const submitApplication = (data) => {
-  console.log("submit application data", data)
   const { epa_cert, fire_cert, use, existing, ...info } = data;
 
   const payload = new FormData();
@@ -19,3 +18,18 @@ export const submitApplication = (data) => {
 
   return payload;
 };
+
+export const submitSMS = (data) => {
+  let { contacts, ...payload } = data
+
+
+  if (contacts?.length > 0) {
+    // convert csv file
+  }
+  else if (typeof(contacts) === "string") {
+    contacts = (contacts.split(",")).trim();
+    payload = {...payload, contacts}
+  }
+
+  return payload
+}

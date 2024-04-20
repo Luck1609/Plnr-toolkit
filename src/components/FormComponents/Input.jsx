@@ -13,6 +13,7 @@ const  Input = ({
   type = "text",
   label = "",
   name,
+  containerClass,
   ...props
 }) => {
   const { control  } = useFormContext();
@@ -22,7 +23,7 @@ const  Input = ({
       control={control}
       name={name}
       render={({ field: {onBlur, onChange, value}, fieldState: {error} }) => (
-        <div>
+        <div className={`${containerClass}`}>
           <label className={`!text-xs font-medium ${error ? "text-danger" : "text-slate-400"} mb-1 inline-block`}>{label}</label>
           <input
             type={type}
@@ -50,6 +51,7 @@ export { Input };
 
 Input.propTypes = {
   className: propTypes.string,
+  containerClass: propTypes.string,
   type: propTypes.string,
   label: propTypes.string,
   name: propTypes.string.isRequired,

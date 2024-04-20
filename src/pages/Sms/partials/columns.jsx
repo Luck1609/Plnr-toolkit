@@ -1,19 +1,10 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import {
-  CircleCheckBig,
-  CircleX,
-  MoreHorizontal,
-  Pencil,
-  Trash,
-} from "lucide-react";
+import { ExternalLink, CircleX } from "lucide-react";
 import ToolTips from "@/components/ToolTip";
 import Actions from "@/components/TableComponent/Actions";
+import Helper from "@/helper";
+
+
+const { isJsonString } = Helper;
 
 export const columns = [
   {
@@ -21,7 +12,9 @@ export const columns = [
     header: "Senders name",
     cell: ({
       row: {
-        original: { user: {firstname, lastname, title} },
+        original: {
+          user: { firstname, lastname, title },
+        },
       },
     }) => (
       <>
@@ -34,16 +27,31 @@ export const columns = [
     header: "Type",
   },
   {
-    accessorKey: "contact",
-    header: "Phone No.",
+    id: "contact",
+    header: <div className="text-center">Recipient(s)</div>,
+    cell: ({
+      row: {
+        original: { contacts },
+      },
+    }) => <div className="text-center">{isJsonString(contacts)?.length}</div>,
   },
   {
-    accessorKey: "units_used",
-    header: "Units",
+    id: "units_used",
+    header: <div className="text-center">Units used</div>,
+    cell: ({
+      row: {
+        original: { units_used },
+      },
+    }) => <div className="text-center">{units_used}</div>,
   },
   {
-    accessorKey: "sent_date",
-    header: "Sent date",
+    id: "sent_date",
+    header: <div className="text-center">Sent date</div>,
+    cell: ({
+      row: {
+        original: { sent_date },
+      },
+    }) => <div className="text-center">{sent_date}</div>,
   },
   {
     accessorKey: "status",
@@ -54,14 +62,14 @@ export const columns = [
       },
     }) => (
       <ToolTips
-        label={
+        value={
           status ? (
-            <CircleCheckBig size={18} className="text-green-400" />
+            <ExternalLink size={18} className="text-green-400" />
           ) : (
-            <CircleX size={18} className="text-red-400" />
+            <CircleX size={18} className="text-amber-400" />
           )
         }
-        value={status ? "Active" : "Inactive"}
+        label={status ? "Sent" : "Not sent"}
       />
     ),
   },
@@ -71,9 +79,7 @@ export const columns = [
     enableHiding: false,
 
     cell: () => {
-      return (
-        <Actions editAction={true} deleteAction={true} />
-      );
+      return <Actions editAction={true} deleteAction={true} />;
     },
   },
 ];

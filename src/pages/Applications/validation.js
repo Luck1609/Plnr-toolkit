@@ -1,13 +1,13 @@
 import * as yup from "yup";
 
 export const DeclineReasonValidation = yup.object().shape({
-  reason: yup
+  comment: yup
     .string()
     .test("comment", "This field is required", function (reason, { parent }) {
       return parent.action === "defer";
     }),
 
-  action: yup.string().required().oneOf(["recommend", "defer"]),
+  action: yup.string().required().oneOf(["defer"]),
 });
 
 export const PermitNumberValidation = yup.object().shape({
@@ -125,3 +125,4 @@ export const MeetingValidation = yup.object().shape({
   venue: yup.string().required(),
   date: yup.date().required()
 });
+

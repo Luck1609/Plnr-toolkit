@@ -7,6 +7,7 @@ import DynamicUrl from "../../components/DynamicUrl";
 import { TypographySm } from "@/components/Typography";
 import AppActionButtons from "./partials/buttons";
 import BatchAction from "./partials/BatchActions";
+import { Button } from "@/components/ui/button";
 
 const urlOptions = (changeData, table) => [
   {
@@ -41,6 +42,7 @@ export default function Applications() {
     dispatch = useDispatch(), changePageData = (status) => setUrl(`status=${status}`);
 
     
+  console.log("Current quarter inof", data)
   return (
     <>
       <BaseTable
@@ -48,33 +50,35 @@ export default function Applications() {
           title: "Appliacations Management",
           btn: {
             show: false,
-            btnComponent: (
-              <AppActionButtons
-                isLoading={isLoading}
-                quarter={data?.data}
-                applications={data?.data?.applications}
-              />
+            btnComponent: isLoading ? (
+              <Button variant="default">Loading...</Button>
+            ) : (
+              <AppActionButtons data={data.data.quarter} />
             ),
           },
           visibleColumns: {
-            select: false
+            select: false,
           },
           component: (table) => (
             <ActionTab
-              data={{ changePageData, url: (url.get("status") ?? "Received"), table }}
+              data={{
+                changePageData,
+                url: url.get("status") ?? "Received",
+                table,
+              }}
             />
           ),
           position: "start",
         }}
         selectedRows={{
           component: (rows) =>
-            isLoading || !data?.data?.id ? (
+            isLoading || !data?.data?.quarter ? (
               <></>
             ) : (
               <BatchAction rows={rows} data={data?.data} />
             ),
         }}
-        data={data?.data?.applications ?? []}
+        data={data?.data?.quarter.applications ?? []}
         columns={columns(dispatch)}
         isLoading={isLoading}
       />
