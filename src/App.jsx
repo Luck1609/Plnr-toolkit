@@ -15,6 +15,7 @@ const Committee = lazy(() => import("@/pages/Committee"));
 const Sms = lazy(() => import("@/pages/Sms"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Letters = lazy(() => import("@/pages/Letter"));
+const MinutesForm = lazy(() => import("@/inc/Meeting/MinutesForm"));
 const PreflightCheck = lazy(() => import("./pages/PreflightCheck"));
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
 
         <Route element={<AuthLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="applications" element={<Permit />} />
+          <Route path="applications/*">
+            <Route index element={<Permit />} />
+            <Route path="minutes/:panel"  element={<MinutesForm />} />
+          </Route>
           <Route path="localities">
             <Route index element={<Locality />} />
             <Route path="sectors/:id"  element={<Sectors />} />

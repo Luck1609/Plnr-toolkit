@@ -1,6 +1,6 @@
 import TablePrint from "@/components/TableComponent/TablePrint";
 import PreviewApplications from "@/pages/Applications/partials/PreviewApplications";
-import Meeting from "@/widgets/Meeting";
+import Meeting from "@/inc/Meeting";
 
 
 export const display = {

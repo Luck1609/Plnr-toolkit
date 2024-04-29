@@ -1,5 +1,4 @@
 .CSVImporter_Importer {
-  
   .CSVImporter_ImporterFrame {
     @apply bg-default border-none;
   }
@@ -8,41 +7,41 @@
     @apply bg-input border text-slate-300;
   }
 
-  .CSVImporter_FileStep__header, .CSVImporter_FormatRawPreview__scroll {
+  .CSVImporter_FileStep__header,
+  .CSVImporter_FormatRawPreview__scroll {
     @apply hidden;
   }
 
-  .CSVImporter_ImporterFrame__header, .CSVImporter_ImporterFrame__headerSubtitle {
+  .CSVImporter_ImporterFrame__header,
+  .CSVImporter_ImporterFrame__headerSubtitle {
     @apply space-x-1 text-slate-300;
     button {
       @apply h-6 w-6 text-slate-300;
-      
+
       span {
         @apply h-5 w-5;
       }
-
     }
     .CSVImporter_ImporterFrame__headerTitle {
-      @apply  text-slate-300;
+      @apply text-slate-300;
     }
   }
 
   .CSVImporter_TextButton {
-    @apply bg-primary hover:bg-primary hover:bg-opacity-90 border-none text-white py-2 text-sm
+    @apply bg-primary hover:bg-primary hover:bg-opacity-90 border-none text-white py-2 text-sm;
   }
 
-  .CSVImporter_ColumnDragSourceArea__box, .CSVImporter_ColumnDragTargetArea__boxValue {
+  .CSVImporter_ColumnDragSourceArea__box,
+  .CSVImporter_ColumnDragTargetArea__boxValue {
     .CSVImporter_ColumnDragCard {
       @apply bg-input text-slate-300;
-
     }
     .CSVImporter_ColumnDragCard__cardHeader > b {
       @apply bg-default text-slate-300;
     }
 
     .CSVImporter_ColumnDragTargetArea__boxLabel {
-      @apply text-slate-300
+      @apply text-slate-300;
     }
   }
-
 }

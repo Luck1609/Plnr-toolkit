@@ -17,6 +17,7 @@ export default function Modal() {
 
   const Component = display[previewModal?.component];
 
+
   return (
     <Dialog open={previewModal.show} onOpenChange={close}>
       <DialogContent className={cn("dark:!bg-default w-full max-w-3xl", previewModal?.className)}>

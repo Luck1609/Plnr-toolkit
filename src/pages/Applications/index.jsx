@@ -42,7 +42,6 @@ export default function Applications() {
     dispatch = useDispatch(), changePageData = (status) => setUrl(`status=${status}`);
 
     
-  console.log("Current quarter inof", data)
   return (
     <>
       <BaseTable

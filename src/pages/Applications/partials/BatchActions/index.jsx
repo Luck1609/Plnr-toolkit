@@ -9,7 +9,7 @@ import SelectedApplicationAction from "./SelectedApplicationAction";
 
 const visibleStatus = ["received", "recommended"];
 
-export default function BatchAction({ rows, data }) {
+export default function BatchAction({ rows, data: { quarter } }) {
   const dispatch = useDispatch(),
     [url] = useSearchParams(),
     status = url.get("status"),
@@ -19,15 +19,16 @@ export default function BatchAction({ rows, data }) {
           show: true,
           title: `${panel.toUpperCase()} meeting details`,
           component: "meeting",
-          data: data?.[panel],
+          data: {...quarter?.[panel], panel},
           clasName: "!max-w-2xl",
         })
       );
 
   return (
     <motion.div className="w-full grid lg:grid-cols-2 py-2 border-b border-slate-500 mb-3">
+      <div className="w-full flex items-center space-x-5">
       {visibleStatus.includes(status) ? (
-        <div className="w-full flex items-center space-x-5">
+        <>
           <span className="font-semibold">
             {`${rows.length ?? 0} application${
               rows.length > 1 ? "s" : ""
@@ -35,15 +36,13 @@ export default function BatchAction({ rows, data }) {
           </span>
 
           <SelectedApplicationAction rows={rows} />
-        </div>
+        </>
       ) : null}
+      </div>
 
-      <div
-        className={`w-full flex ${
-          !visibleStatus.includes(status) ? "justify-start" : "justify-end"
-        } -space-x-3`}
-      >
-        {status === "received" && (
+       
+      <div className="w-full flex justify-end -space-x-3">
+        {(status === "received" || !status) && (
           <ToolTips
             value={
               <Button
@@ -52,9 +51,10 @@ export default function BatchAction({ rows, data }) {
                 onClick={toggleMeeting("tsc")}
               >
                 <span className="mr-2">
-                  {!data?.tsc ? "Schedule TSC meeting" : "TSC Meeting"}
+                  {!quarter?.tsc ? "Schedule TSC meeting" : "TSC Meeting"}
                 </span>
-                {data?.tsc ? (
+
+                {quarter?.tsc ? (
                   <CircleCheckBig size={18} className="text-success" />
                 ) : (
                   <CircleX size={18} className="text-danger" />
@@ -74,9 +74,9 @@ export default function BatchAction({ rows, data }) {
                 onClick={toggleMeeting("spc")}
               >
                 <span className="mr-2">
-                  {!data?.spc ? "Schedule SPC meeting" : "SPC Meeting"}
+                  {!quarter?.spc ? "Schedule SPC meeting" : "SPC Meeting"}
                 </span>
-                {data?.spc ? (
+                {quarter?.spc ? (
                   <CircleCheckBig size={18} className="text-success" />
                 ) : (
                   <CircleX size={18} className="text-danger" />

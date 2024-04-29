@@ -1,0 +1,42 @@
+@media (prefers-color-scheme: dark) {
+  .editor-container {
+    .tox-statusbar__branding,
+    .tox-promotion {
+      @apply hidden;
+    }
+
+    .tox-tinymce {
+      @apply dark:border-default;
+    }
+
+    .tox-editor-header,
+    .tox-menubar,
+    .tox-toolbar-overlord,
+    .tox-toolbar__primary,
+    .tox-edit-area__iframe,
+    .tox-statusbar {
+      @apply dark:!bg-input dark:border-input;
+    }
+
+    .tox-editor-header {
+      button,
+      .tox-tbtn {
+        @apply dark:bg-[#383C5A] dark:text-slate-300 dark:disabled:bg-opacity-60;
+
+        svg {
+          @apply fill-slate-300 group-hover:text-slate-200;
+        }
+      }
+    }
+
+    .tox-edit-area {
+      iframe {
+        body {
+          #tinymce {
+            @apply dark:text-slate-300;
+          }
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ export default function MeetingScheduleBtn() {
       toggleModal({
         show: true,
         component: panel,
-        url: `/panel`,
+        url: `/${panel}`,
         mutation: "/application",
         title: "Schedule TSC meeting",
         values: {

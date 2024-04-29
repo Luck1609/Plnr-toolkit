@@ -1,4 +1,3 @@
-import LinkTag from "@/components/Link";
 import {
   FileInput,
   LayoutDashboard,
@@ -11,7 +10,7 @@ import {
   Users,
   UsersRound,
 } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Links = [
   {
@@ -75,21 +74,21 @@ export default function SideNav() {
         {Links.map(({ url, name, icon }) => {
           return (
             <li className="" key={url}>
-              <LinkTag
+              <Link
                 key={name}
                 className={`w-full block my-1 p-2 rounded-md ${
                   url.startsWith(pathname)
                     ? "bg-active"
                     : "hover:bg-active-hover"
                 }`}
-                url={url}
+                to={url}
               >
                 <span className={`flex items-center pl-5`}>
                   {/* <Icon active={location.includes(url)} />  */}
                   {icon}
                   {name}
                 </span>
-              </LinkTag>
+              </Link>
             </li>
           );
         })}

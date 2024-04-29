@@ -7,13 +7,8 @@ import ThemeProvider from "./providers/ThemeProvider.jsx";
 import Helper from "./helper/index";
 import { Provider } from "react-redux";
 import { store } from "./lib/toolkit/index";
-import { NoticeModal } from "./components/NoticeModal";
-import FormModal from "./components/FormComponents/FormModal";
 // import { Toaster } from "sonner";
-import { LogoutModal } from "./layouts/Auth/LogoutModal";
-import StepFormModal from "./components/FormComponents/StepFormModal";
 import SuspenseLoader from "./components/Suspense";
-import Modal from "./components/Modal";
 import { Toaster } from "./components/ui/toaster";
 
 const { api, http } = Helper,
@@ -25,11 +20,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <SWRConfig value={{ fetcher }}>
         <SuspenseLoader>
           <Toaster />
-          <FormModal />
-          <StepFormModal />
-          <Modal />
-          <NoticeModal />
-          <LogoutModal />
           <App />
         </SuspenseLoader>
       </SWRConfig>
